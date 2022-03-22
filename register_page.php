@@ -1,7 +1,3 @@
-<?php
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +11,6 @@
             margin-right: 300px;
             margin-top: 20px;
         }
-
         .card-img-top {
             width: 350px;
         }
@@ -30,7 +25,7 @@
         <div class="card">
             <div class="card-body p-5">
                 <h2 class="text-uppercase text-center mb-5">Register an account</h2>
-                <form action="post">
+                <form action="process.php" method="post">
                     <div class="form-outline mb-3">
                         <input type="email" class="form-control" id="email">
                         <label for="email" class="form-label">Email</label>
