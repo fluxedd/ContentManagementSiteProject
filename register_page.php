@@ -1,3 +1,6 @@
+<?php 
+    
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,10 +28,10 @@
         <div class="card">
             <div class="card-body p-5">
                 <h2 class="text-uppercase text-center mb-5">Register an account</h2>
-                <form action="process.php" method="post">
+                <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
                     <div class="form-outline mb-3">
-                        <input type="email" class="form-control" id="email">
-                        <label for="email" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="username">
+                        <label for="username" class="form-label">Username</label>
                     </div>
                     <div class="form-outline mb-3">
                         <input type="password" class="form-control" id="password">
