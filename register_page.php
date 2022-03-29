@@ -6,17 +6,63 @@
 
     if($_SERVER["REQUEST_METHOD"] == "POST") 
     {
-        $query = "SELECT userID FROM users WHERE username = :username";
-
-        if($statement = $db->prepare($query))
+        if(empty(trim($_POST["username"])))
         {
-            $statement->bindParam(":username", $param_username, PDO::PARAM_STR);
-            $param_username = trim($_POST["username"]);
+            $bad_username = "Username cannot be blank.";
+        } elseif(!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["username"])))
+        {
+            $bad_username = "Username can only have alphanumeric characters and underscores.";
+        } else {
+            $query = "SELECT userID FROM users WHERE username = :username";
 
-            $statement->execute();
+            if($statement = $db->prepare($query))
+            {
+                $statement->bindParam(":username", $param_username, PDO::PARAM_STR);
+                $param_username = trim($_POST["username"]);
 
-            unset($statement);
+                $statement->execute();
 
+                $good_username = trim($_POST["username"]);
+
+                if($statement->execute())
+                {
+                    if($statement->rowCount() == 1)
+                    {
+                        $bad_username = "Username is taken.";
+                    } else {
+                        $good_username = trim($_POST["username"]);
+                    }
+                } else {
+                    echo "Something went wrong.";
+                }
+
+                unset($statement);
+            }
+        }
+        
+        if(empty(trim($_POST["password"])))
+        {
+            $bad_password = "Please enter a password.";
+        } elseif (strlen(trim($_POST["password"])) < 8) 
+        {
+            $bad_password = "Password must be at least 8 characters.";
+        } else {
+            $good_password = trim($_POST["password"]);
+        }
+
+        if(empty(trim($_POST["confirmPassword"]))) 
+        {
+            $bad_confirm_password = "Please confirm password.";
+        } else {
+            $good_confirm_password = trim($_POST["confirmPassword"]);
+            if(empty($bad_password) && ($good_password != $good_confirm_password))
+            {
+                $bad_confirm_password = "Password must match";
+            }
+        }
+
+        if(empty($bad_username) && empty($bad_password) && empty($bad_confirm_password))
+        {
             $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
 
             if($statement = $db->prepare($sql))
@@ -37,7 +83,7 @@
                 unset($statement);
             }
         }
-
+        
         unset($db);
     }
 ?>
@@ -70,16 +116,19 @@
                 <h2 class="text-uppercase text-center mb-5">Register an account</h2>
                 <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
                     <div class="form-outline mb-3">
-                        <input type="text" class="form-control <?= (!empty($bad_username)) ? 'invalid' : ''; ?>" id="username" value="<?= $good_username ?>">
+                        <input type="text" class="form-control <?= (!empty($bad_username)) ? 'invalid' : ''; ?>" id="username" value="<?= $good_username ?>" name="username">
                         <label for="username" class="form-label">Username</label>
+                        <span class="text-danger"><?= $bad_username ?></span>
                     </div>
                     <div class="form-outline mb-3">
-                        <input type="password" class="form-control <?= (!empty($bad_password)) ? 'invalid' : ''; ?>" id="password" value="<?= $good_password ?>">
+                        <input type="password" class="form-control <?= (!empty($bad_password)) ? 'invalid' : ''; ?>" id="password" value="<?= $good_password ?>" name="password">
                         <label for="password" class="form-label">Password</label>
+                        <span class="text-danger"><?= $bad_password ?></span>
                     </div>
                     <div class="form-outline mb-3">
-                        <input type="password" class="form-control <?= (!empty($bad_confirm_password)) ? 'invalid' : ''; ?>" id="confirmPassword" value="<?= $good_confirm_password ?>">
+                        <input type="password" class="form-control <?= (!empty($bad_confirm_password)) ? 'invalid' : ''; ?>" id="confirmPassword" value="<?= $good_confirm_password ?>" name="confirmPassword">
                         <label for="confirmPassword" class="form-label">Confirm Password</label>
+                        <span class="text-danger"><?= $bad_confirm_password ?></span>
                     </div>
                     <button class="btn btn-primary btn-block btn-lg text-body">Register</button>
                 </form>
