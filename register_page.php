@@ -1,5 +1,45 @@
 <?php 
-    
+    require_once('connect.php');
+
+    $good_username = $good_password = $good_confirm_password = "";
+    $bad_username = $bad_password = $bad_confirm_password = "";
+
+    if($_SERVER["REQUEST_METHOD"] == "POST") 
+    {
+        $query = "SELECT userID FROM users WHERE username = :username";
+
+        if($statement = $db->prepare($query))
+        {
+            $statement->bindParam(":username", $param_username, PDO::PARAM_STR);
+            $param_username = trim($_POST["username"]);
+
+            $statement->execute();
+
+            unset($statement);
+
+            $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
+
+            if($statement = $db->prepare($sql))
+            {
+                $statement->bindParam(":username", $param_username, PDO::PARAM_STR);
+                $statement->bindParam(":password", $param_password, PDO::PARAM_STR);
+
+                $param_username = $good_username;
+                $param_password = password_hash($good_password, PASSWORD_DEFAULT);
+
+                if($statement->execute())
+                {
+                    header("Location: index.php");
+                } else {
+                    echo "Something went wrong.";
+                }
+
+                unset($statement);
+            }
+        }
+
+        unset($db);
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,15 +70,15 @@
                 <h2 class="text-uppercase text-center mb-5">Register an account</h2>
                 <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
                     <div class="form-outline mb-3">
-                        <input type="text" class="form-control" id="username">
+                        <input type="text" class="form-control <?= (!empty($bad_username)) ? 'invalid' : ''; ?>" id="username" value="<?= $good_username ?>">
                         <label for="username" class="form-label">Username</label>
                     </div>
                     <div class="form-outline mb-3">
-                        <input type="password" class="form-control" id="password">
+                        <input type="password" class="form-control <?= (!empty($bad_password)) ? 'invalid' : ''; ?>" id="password" value="<?= $good_password ?>">
                         <label for="password" class="form-label">Password</label>
                     </div>
                     <div class="form-outline mb-3">
-                        <input type="password" class="form-control" id="confirmPassword">
+                        <input type="password" class="form-control <?= (!empty($bad_confirm_password)) ? 'invalid' : ''; ?>" id="confirmPassword" value="<?= $good_confirm_password ?>">
                         <label for="confirmPassword" class="form-label">Confirm Password</label>
                     </div>
                     <button class="btn btn-primary btn-block btn-lg text-body">Register</button>

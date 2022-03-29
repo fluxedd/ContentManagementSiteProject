@@ -73,6 +73,7 @@
             <ul class="list-group">
                 <li class="list-group-item"><span class="font-weight-bold">Genre:</span> <?= $row['genre'] ?></li>
                 <li class="list-group-item"><span class="font-weight-bold">Number of Episodes:</span> <?= $row['episodeCount'] ?></li>
+                <li class="list-group-item"><span class="font-weight-bold">Studio:</span> <?= $row['studio'] ?></li>
                 <li class="list-group-item"><a class="btn btn-primary btn-sm" href="#">Submit a review</a></li>
             </ul>
         </div>

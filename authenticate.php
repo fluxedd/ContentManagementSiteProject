@@ -1,7 +1,7 @@
 <?php 
 
   define('ADMIN_LOGIN','wally'); 
-  define('ADMIN_PASSWORD','mpass'); 
+  define('ADMIN_PASSWORD','mypass'); 
 
   if (!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW']) 
       || ($_SERVER['PHP_AUTH_USER'] != ADMIN_LOGIN) 
