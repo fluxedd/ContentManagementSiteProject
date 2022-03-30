@@ -1,6 +1,8 @@
 <?php 
     require('connect.php');
 
+    session_start();
+
     $bad_username = '';
     $bad_password = '';
 
@@ -17,49 +19,54 @@
         if(empty($_POST['username']))
         {
             $bad_username = 'Enter a username.';
+        } else {
+            $good_username = $_POST['username'];
         }
 
         if(empty($_POST['password']))
         {
             $bad_password = 'Enter your password.';
+        } else {
+            $good_password = $_POST['password'];
         }
 
         if(!empty($_POST['username']) && !empty($_POST['password']))
         {
-            $good_username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $good_username = $_POST['username'];
             $good_password = $_POST['password'];
 
-            $query = "SELECT username, password, user_type FROM users WHERE username = :username LIMIT 1";
+            $query = "SELECT user_type, username, password FROM users WHERE username = :username LIMIT 1";
             $statement = $db->prepare($query);
 
-            $statement->bindvalue(':username', $good_username, PDO::PARAM_STR);
+            $statement->bindValue(':username', $good_username);
 
             $statement->execute();
             $count = $statement->rowCount();
-            $row = $statement->fetch();
-        
-            if($count == 1 && !empty($row))
+            
+            
+            if($count == 1)
             {
-                if(password_verify($good_password, $row['password']))
+                if($row = $statement->fetch())
                 {
-                    session_start();
-                    $_SESSION['loggedin'] = true;
-                    $_SESSION['username'] = $row['username'];
-                    $_SESSION['user_type'] = $row['user_type'];
-                    header('Location: index.php');
-                } else {
-                    $bad_login = 'Invalid username or password.';
+                    $username = $row['username'];
+                    $user_type = $row['user_type'];
+
+                    if(password_verify($_POST['password'], $row['password']));
+                    {
+                        session_start();
+                        $_SESSION['loggedin'] = true;
+                        $_SESSION['username'] = $username;
+                        $_SESSION['user_type'] = $user_type;
+                        header('Location: index.php');
+                    }
                 }
-
-            } else 
-            {
-                $bad_login = 'Invalid username or password.';
-            }
-        } 
-
-        
+            } 
+        } else {
+            $bad_login = 'Invalid username or password.';
+        }
+        unset($statement);
     }
-    
+    unset($db);
 ?>
 
 <!DOCTYPE html>

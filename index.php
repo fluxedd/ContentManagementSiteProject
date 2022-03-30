@@ -43,18 +43,28 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">Genres</a>
             </li>
-            <li class="nav-item">
-                <a href="admin.php" class="nav-link">Admin</a>
-            </li>
+            <?php if(isset($_SESSION["loggedin"]) && $_SESSION['user_type'] == 1) : ?>
+                <li class="nav-item">
+                    <a href="admin.php" class="nav-link">Admin-View</a>
+                </li>
+            <?php endif ?>
         </ul>
+        
+
         <ul class="navbar-nav mr-auto">
+        <?php if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) : ?>
+            <li class="nav-item">
+                <span class="navbar-text">Welcome, <?= $_SESSION['username'] ?></a>
+            </li>
+        <?php else : ?>
             <li class="nav-item">
                 <a href="register_page.php" class="nav-link">Register</a>
             </li>
             <li class="nav-item">
                 <a href="login.php" class="nav-link">Login</a>
             </li>
-            <li class="nav-item">
+        <?php endif ?>
+            <li class="nav-item pl-4">
                 <a href="logout.php" class="nav-link">Logout</a>
             </li>
         </ul>
