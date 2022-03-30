@@ -1,90 +1,129 @@
 <?php 
     require_once('connect.php');
 
-    $good_username = $good_password = $good_confirm_password = "";
-    $bad_username = $bad_password = $bad_confirm_password = "";
+    $good_email = '';
+    $good_username = '';
+    $good_password = ''; 
+    $good_confirm_password = '';
 
-    if($_SERVER["REQUEST_METHOD"] == "POST") 
+    $bad_email = '';
+    $bad_username = '';
+    $bad_password = '';
+    $bad_confirm_password = '';
+
+    if($_SERVER['REQUEST_METHOD'] == 'POST') 
     {
-        if(empty(trim($_POST["username"])))
+        // Email validation.
+        if(empty($_POST['email']))
         {
-            $bad_username = "Username cannot be blank.";
-        } elseif(!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["username"])))
+            $bad_email = 'Email must be included.';
+        } elseif (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) 
         {
-            $bad_username = "Username can only have alphanumeric characters and underscores.";
+            $bad_email = 'Must be a valid email.';
         } else {
-            $query = "SELECT userID FROM users WHERE username = :username";
+            $query = 'SELECT email FROM users WHERE email = :email';
 
             if($statement = $db->prepare($query))
             {
-                $statement->bindParam(":username", $param_username, PDO::PARAM_STR);
-                $param_username = trim($_POST["username"]);
+                $statement->bindParam(':email', $param_email, PDO::PARAM_STR);
+                $param_email = $_POST['email'];
 
                 $statement->execute();
 
-                $good_username = trim($_POST["username"]);
+                $good_email = $_POST['email'];
 
                 if($statement->execute())
                 {
                     if($statement->rowCount() == 1)
                     {
-                        $bad_username = "Username is taken.";
+                        $bad_email = 'Email is taken.';
                     } else {
-                        $good_username = trim($_POST["username"]);
+                        $good_email = $_POST['email'];
                     }
-                } else {
-                    echo "Something went wrong.";
-                }
+                } 
+
+                unset($statement);
+            }
+        }
+
+        // Username validation
+        if(empty($_POST['username']))
+        {
+            $bad_username = 'Username must be included.';
+        } elseif(!preg_match('/^[a-zA-Z0-9_]+$/', $_POST['username']))
+        {
+            $bad_username = 'Username can only have alphanumeric characters and underscores.';
+        } else {
+            $query = 'SELECT userID FROM users WHERE username = :username';
+
+            if($statement = $db->prepare($query))
+            {
+                $statement->bindParam(':username', $param_username, PDO::PARAM_STR);
+                $param_username = $_POST['username'];
+
+                $statement->execute();
+
+                $good_username = $_POST['username'];
+
+                if($statement->execute())
+                {
+                    if($statement->rowCount() == 1)
+                    {
+                        $bad_username = 'Username is taken.';
+                    } else {
+                        $good_username = $_POST['username'];
+                    }
+                } 
 
                 unset($statement);
             }
         }
         
-        if(empty(trim($_POST["password"])))
+        // Password validation
+        if(empty($_POST['password']))
         {
-            $bad_password = "Please enter a password.";
-        } elseif (strlen(trim($_POST["password"])) < 8) 
+            $bad_password = 'Please enter a password.';
+        } elseif (strlen(($_POST['password'])) < 8) 
         {
-            $bad_password = "Password must be at least 8 characters.";
+            $bad_password = 'Password must be at least 8 characters.';
         } else {
-            $good_password = trim($_POST["password"]);
+            $good_password = $_POST['password'];
         }
 
-        if(empty(trim($_POST["confirmPassword"]))) 
+        // Confirm Password validation.
+        // Checks if it matches with Password.
+        if(empty(($_POST['confirmPassword']))) 
         {
-            $bad_confirm_password = "Please confirm password.";
+            $bad_confirm_password = 'Please confirm password.';
         } else {
-            $good_confirm_password = trim($_POST["confirmPassword"]);
+            $good_confirm_password = ($_POST['confirmPassword']);
             if(empty($bad_password) && ($good_password != $good_confirm_password))
             {
-                $bad_confirm_password = "Password must match";
+                $bad_confirm_password = 'Password must match';
             }
         }
 
-        if(empty($bad_username) && empty($bad_password) && empty($bad_confirm_password))
+        // Once eveything passes through, store user info in database.
+        if(empty($bad_username) && empty($bad_password) && empty($bad_confirm_password) && empty($bad_email))
         {
-            $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
+            $query = 'INSERT INTO users (email, username, password) VALUES (:email, :username, :password)';
 
-            if($statement = $db->prepare($sql))
+            if($statement = $db->prepare($query))
             {
-                $statement->bindParam(":username", $param_username, PDO::PARAM_STR);
-                $statement->bindParam(":password", $param_password, PDO::PARAM_STR);
+                $statement->bindParam(':email', $param_email, PDO::PARAM_STR);
+                $statement->bindParam(':username', $param_username, PDO::PARAM_STR);
+                $statement->bindParam(':password', $param_password, PDO::PARAM_STR);
 
+                $param_email = $good_email;
                 $param_username = $good_username;
                 $param_password = password_hash($good_password, PASSWORD_DEFAULT);
 
                 if($statement->execute())
                 {
-                    header("Location: index.php");
-                } else {
-                    echo "Something went wrong.";
-                }
-
-                unset($statement);
+                    header('Location: login.php');
+                } 
             }
         }
-        
-        unset($db);
     }
 ?>
 <!DOCTYPE html>
@@ -116,6 +155,11 @@
                 <h2 class="text-uppercase text-center mb-5">Register an account</h2>
                 <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
                     <div class="form-outline mb-3">
+                        <input type="email" class="form-control <?= (!empty($bad_email)) ? 'invalid' : ''; ?>" id="email" value="<?= $good_email ?>" name="email">
+                        <label for="email" class="form-label">Email</label>
+                        <span class="text-danger"><?= $bad_email ?></span>
+                    </div>
+                    <div class="form-outline mb-3">
                         <input type="text" class="form-control <?= (!empty($bad_username)) ? 'invalid' : ''; ?>" id="username" value="<?= $good_username ?>" name="username">
                         <label for="username" class="form-label">Username</label>
                         <span class="text-danger"><?= $bad_username ?></span>
@@ -130,7 +174,7 @@
                         <label for="confirmPassword" class="form-label">Confirm Password</label>
                         <span class="text-danger"><?= $bad_confirm_password ?></span>
                     </div>
-                    <button class="btn btn-primary btn-block btn-lg text-body">Register</button>
+                    <button class="btn btn-primary btn-block btn-lg text-body" name="command" value="Register Account">Register</button>
                 </form>
             </div>
         </div>
