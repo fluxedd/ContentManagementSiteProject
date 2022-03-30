@@ -1,6 +1,8 @@
 <?php 
     require('connect.php');
 
+    session_start();
+
     $query = "SELECT * FROM anime ORDER BY timestamp DESC LIMIT 12";
 
     $statement = $db->prepare($query);
@@ -51,6 +53,9 @@
             </li>
             <li class="nav-item">
                 <a href="login.php" class="nav-link">Login</a>
+            </li>
+            <li class="nav-item">
+                <a href="logout.php" class="nav-link">Logout</a>
             </li>
         </ul>
         <form action="" class="form-inline my-2 my-lg-0">
