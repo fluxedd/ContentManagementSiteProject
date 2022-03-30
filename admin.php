@@ -1,5 +1,4 @@
 <?php 
-    require('authenticate.php');
     require('connect.php');
 
     $query = "SELECT * FROM anime ORDER BY title DESC ";

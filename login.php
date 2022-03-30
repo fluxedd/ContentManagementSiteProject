@@ -48,16 +48,18 @@
             {
                 if($row = $statement->fetch())
                 {
+
                     $username = $row['username'];
                     $user_type = $row['user_type'];
-
-                    if(password_verify($_POST['password'], $row['password']));
+                    if(password_verify($_POST['password'], $row['password']))
                     {
                         session_start();
                         $_SESSION['loggedin'] = true;
                         $_SESSION['username'] = $username;
                         $_SESSION['user_type'] = $user_type;
                         header('Location: index.php');
+                    } else {
+                        $bad_login = 'Inavlid username or password.';
                     }
                 }
             } 
