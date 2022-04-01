@@ -3,11 +3,21 @@
 
     session_start();
 
-    $query = "SELECT * FROM anime ORDER BY timestamp DESC LIMIT 12";
+    if(is_numeric($_GET['animeID']))
+    {
+        $id = filter_input(INPUT_GET, 'animeID', FILTER_SANITIZE_NUMBER_INT);
+        
+        $reviewsQuery = "SELECT *, r.timestamp
+        FROM review r
+        JOIN anime a ON r.animeID = a.animeID
+        WHERE r.animeID = :animeID
+        ORDER BY r.timestamp
+        DESC";
 
-    $statement = $db->prepare($query);
-
-    $statement->execute();
+        $reviewsStmt = $db->prepare($reviewsQuery);
+        $reviewsStmt->bindValue(':animeID', $id);
+        $reviewsStmt->execute();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -23,13 +33,12 @@
             margin-right: 300px;
             margin-top: 20px;
         }
-
     </style>
     <title>AniLogger</title>
 </head>
 <body class="body">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a href="index.php" class="navbar-brand">AniLogger</a>
+        <a href="index.php" class="navbar-brand">AniLogger</a> 
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href="index.php">Home</a>
@@ -46,7 +55,6 @@
                 </li>
             <?php endif ?>
         </ul>
-        
 
         <ul class="navbar-nav mr-auto">
         <?php if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) : ?>
@@ -65,6 +73,7 @@
                 <a href="logout.php" class="nav-link">Logout</a>
             </li>
         </ul>
+        
         <form action="" class="form-inline my-2 my-lg-0">
             <input type="search" class="form-control mr-sm-2" placeholder="Search anime..." aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -72,24 +81,16 @@
     </nav>
     <div class="py-3">
         <div class="container">
-            <div class="row">
-            <?php while($row = $statement->fetch()) : ?>
-                <div class="col-md-4">
-                    <div class="card mb-3" >
-                        <img src="<?= (isset($row['image'])) ? 'uploads/resized_' . $row['image'] : 'uploads/no_image.png' ?>"  class="card-img-top">
-                        <div class="card-body">
-                            <h2 class="card-title"><a href="view_anime.php?animeID=<?= $row['animeID'] ?>"><?=$row['title'] ?></a></h2>
-                        </div>
-                        <p class="card-text pl-3"><small class="text-muted">Last updated <?= $row['timestamp'] ?></small></p>
-                        <p class="card-text pl-3"><small class="text-muted">Created by: <?= $row['username'] ?></small></p>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><a href="review_list.php?animeID=<?= $row['animeID'] ?>">Reviews List</a></li>
-                            <li class="list-group-item"><a href="post_review.php?animeID=<?= $row['animeID'] ?>">Leave a Review</a></li>
-                        </ul>      
-                    </div>
-                </div>
+            <p class="display-4">Reviews</p>
+            <ul class="list-group">
+            <?php while($row = $reviewsStmt->fetch()) : ?>
+                <li class="list-group-item" style="width: 350px;">
+                    <?= $row['review'] ?>
+                    <p><?= $row['timestamp'] ?></p>
+                    <p><?= $row['satisfactoryRating'] . '/10' ?></p>
+                </li>
             <?php endwhile ?>  
-            </div>
+            </ul>
         </div>
     </div>
 </body>

@@ -1,6 +1,8 @@
 <?php 
     require('connect.php');
 
+    session_start();
+
     if($_GET && is_numeric($_GET['animeID']))
     {
         $query = "SELECT b.genre, a.*
@@ -96,7 +98,6 @@
                 <li class="list-group-item"><span class="font-weight-bold">Genre:</span> <?= $row['genre'] ?></li>
                 <li class="list-group-item"><span class="font-weight-bold">Number of Episodes:</span> <?= $row['episodeCount'] ?></li>
                 <li class="list-group-item"><span class="font-weight-bold">Studio:</span> <?= $row['studio'] ?></li>
-                <li class="list-group-item"><a class="btn btn-primary btn-sm" href="#">Submit a review</a></li>
             </ul>
         </div>
         <div class="card-footer">
