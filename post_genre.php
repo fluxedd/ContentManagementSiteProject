@@ -3,11 +3,7 @@
     
     session_start();
 
-    if(!isset($_SESSION['loggedin']))
-    {
-        echo "<script>alert('You must be logged in to do this!'); 
-        window.location.href='index.php';</script>";
-    }
+    require('warning.php');
 
     $query = "SELECT * FROM genre ORDER BY genre ASC";
 
@@ -78,7 +74,7 @@
                 <a href="logout.php" class="nav-link">Logout</a>
             </li>
         </ul>
-        
+
         <form action="" class="form-inline my-2 my-lg-0">
             <input type="search" class="form-control mr-sm-2" placeholder="Search anime..." aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -90,7 +86,7 @@
             <form action="process.php" method="post">
                 <div class="form-group">
                     <label for="genre" class="font-weight-bold">Genre</label>
-                    <input type="text" class="form-control" id="title" name="title" style="width: 200px;">  
+                    <input type="text" class="form-control" id="genre" name="genre" style="width: 200px;">  
                 </div>
                 <button class="btn btn-dark" name="command" value="Add Genre">Add Genre</button>
             </form>
