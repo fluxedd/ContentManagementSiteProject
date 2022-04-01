@@ -67,7 +67,7 @@
                 <a href="logout.php" class="nav-link">Logout</a>
             </li>
         </ul>
-        
+
         <form action="" class="form-inline my-2 my-lg-0">
             <input type="search" class="form-control mr-sm-2" placeholder="Search anime..." aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -75,6 +75,7 @@
     </nav>
     <div class="py-3">
         <div class="container">
+        <p class="display-4">Users</p>
             <ul class="list-group">
             <?php while($row = $statement->fetch()) : ?>
                 <li class="list-group-item" style="width: 350px;"><?= $row['username'] ?></li>
