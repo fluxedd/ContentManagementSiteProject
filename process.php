@@ -52,6 +52,8 @@
                 if(check_mime_type($temporary_file_path, $new_file_path))
                 {
                     move_uploaded_file($temporary_file_path, $new_file_path);    
+                } else {
+                    $file_filename = null;
                 }
             }
 
