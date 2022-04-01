@@ -3,7 +3,7 @@
 
     if($_GET && is_numeric($_GET['animeID']))
     {
-        $query = "SELECT a.title, b.genre, a.episodeCount, a.image, a.studio, a.timestamp
+        $query = "SELECT b.genre, a.*
         FROM Anime AS a
         JOIN Genre AS b ON b.genreID = a.genre_fk
         WHERE a.animeID = :animeID 
@@ -39,8 +39,9 @@
         }
 
         .card-img-top {
-            width: 350px;
+            width: 800px;
         }
+
     </style>
     <title>AniLogger</title>
 </head>
@@ -87,10 +88,10 @@
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </nav>
-    <div class="card border-info mb-3" >
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/-Insert_image_here-.svg/1200px--Insert_image_here-.svg.png" alt="anime image" class="card-img-top">
-        <div class="card-body text-info">
-            <h2 class="card-title"><?= $row['title'] ?></h2>
+    <div class="card mb-3" >
+        <img src="<?= (isset($row['image'])) ? 'uploads/' . $row['image'] : 'uploads/no_image.png' ?>"  class="card-img-top rounded mx-auto d-block">
+        <div class="card-body">
+            <h2 class="card-title font-weight-bold"><?= $row['title'] ?></h2>
             <ul class="list-group">
                 <li class="list-group-item"><span class="font-weight-bold">Genre:</span> <?= $row['genre'] ?></li>
                 <li class="list-group-item"><span class="font-weight-bold">Number of Episodes:</span> <?= $row['episodeCount'] ?></li>

@@ -24,9 +24,6 @@
             margin-top: 20px;
         }
 
-        .card-img-top {
-            width: 350px;
-        }
     </style>
     <title>AniLogger</title>
 </head>
@@ -79,12 +76,13 @@
             <?php while($row = $statement->fetch()) : ?>
                 <div class="col-md-4">
                     <div class="card mb-3" >
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/-Insert_image_here-.svg/1200px--Insert_image_here-.svg.png" alt="" class="card-img-top">
+                        <img src="<?= (isset($row['image'])) ? 'uploads/resized_' . $row['image'] : 'uploads/no_image.png' ?>"  class="card-img-top">
                         <div class="card-body">
                             <h2 class="card-title"><?=$row['title'] ?></h2>
                             <p class="card-text" style="height:9rem;"><?= $row['review'] ?></p>   
                         </div>
                         <p class="card-text pl-3"><small class="text-muted">Last updated <?= $row['timestamp'] ?></small></p>
+                        <p class="card-text pl-3"><small class="text-muted">Created by: <?= $row['username'] ?></small></p>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><a href="view_anime.php?animeID=<?= $row['animeID'] ?>">More info...</a></li>
                             <li class="list-group-item"><a href="#">More reviews...</a></li>

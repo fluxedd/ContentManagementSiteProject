@@ -87,7 +87,7 @@
     <div class="py-3">
         <div class="container">
             <p class="display-4">New Anime Entry</p>
-            <form action="process.php" method="post">
+            <form action="process.php" method="post" enctype='multipart/form-data'>
                 <div class="form-group">
                     <label for="title" class="font-weight-bold">Title</label>
                     <input type="text" class="form-control" id="title" name="title">
@@ -113,7 +113,7 @@
                 </div>
                 <div class="form-group">
                     <label for="uploadImage" class="font-weight-bold">Upload Image</label>
-                    <input type="file" class="form-control-file" id="uploadImage">
+                    <input type="file" class="form-control-file" id="uploadImage" name="uploadImage">
                 </div>
                 <button class="btn btn-dark" name="command" value="Add Anime">Add Anime</button>
             </form>
