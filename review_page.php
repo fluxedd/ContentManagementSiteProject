@@ -4,6 +4,12 @@
     session_start();
 
     require('warning.php');
+
+    $query = "SELECT * FROM genre ORDER BY genre ASC";
+
+    $statement = $db->prepare($query);
+
+    $statement->execute();
 ?>
 
 <!DOCTYPE html>
@@ -76,13 +82,13 @@
     </nav>
     <div class="py-3">
         <div class="container">
-            <p class="display-4">New Genre Entry</p>
+            <p class="display-4">New Review Entry</p>
             <form action="process.php" method="post">
                 <div class="form-group">
-                    <label for="genre" class="font-weight-bold">Genre</label>
-                    <input type="text" class="form-control" id="genre" name="genre" style="width: 200px;">  
+                    <label for="review" class="font-weight-bold">Review</label>
+                    <textarea name="review" id="review" cols="3" class="form-control"></textarea>
                 </div>
-                <button class="btn btn-dark" name="command" value="Add Genre">Add Genre</button>
+                <button class="btn btn-dark" name="command" value="Add Review">Add Review</button>
             </form>
         </div>
     </div>
