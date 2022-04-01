@@ -1,7 +1,11 @@
 <?php 
     require('connect.php');
 
-    $query = "SELECT * FROM anime ORDER BY title DESC ";
+    session_start();
+
+    require('warning.php');
+
+    $query = "SELECT username FROM users";
 
     $statement = $db->prepare($query);
 
@@ -36,15 +40,34 @@
                 <a class="nav-link" href="index.php">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Anime</a>
+                <a class="nav-link" href="anime_list">Anime</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Genres</a>
+                <a class="nav-link" href="genre_list">Genres</a>
             </li>
             <li class="nav-item">
-                <a href="admin.php" class="nav-link">Admin</a>
+                <a href="admin.php" class="nav-link">Admin-View</a>
             </li>
         </ul>
+
+        <ul class="navbar-nav mr-auto">
+        <?php if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) : ?>
+            <li class="nav-item">
+                <span class="navbar-text">Welcome, <?= $_SESSION['username'] ?></a>
+            </li>
+        <?php else : ?>
+            <li class="nav-item">
+                <a href="register_page.php" class="nav-link">Register</a>
+            </li>
+            <li class="nav-item">
+                <a href="login.php" class="nav-link">Login</a>
+            </li>
+        <?php endif ?>
+            <li class="nav-item pl-4">
+                <a href="logout.php" class="nav-link">Logout</a>
+            </li>
+        </ul>
+        
         <form action="" class="form-inline my-2 my-lg-0">
             <input type="search" class="form-control mr-sm-2" placeholder="Search anime..." aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -54,10 +77,9 @@
         <div class="container">
             <ul class="list-group">
             <?php while($row = $statement->fetch()) : ?>
-                <li class="list-group-item" style="width: 350px;"><a href="#"><?= $row['title'] ?></a></li>
+                <li class="list-group-item" style="width: 350px;"><?= $row['username'] ?></li>
             <?php endwhile ?>  
             </ul>
-            <a class="btn btn-dark my-3" href="create.php">Add Anime</a>
         </div>
     </div>
 </body>
