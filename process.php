@@ -27,6 +27,32 @@
         } else {
             $error = "There was something wrong with your submission form.";
         }
+
+        unset($statement);
+    }
+
+    if($_POST['command'] == 'Add Genre')
+    {
+        if($_POST && !empty($_POST['genre']))
+        {
+            $genre = filter_input(INPUT_POST, 'genre', FILTER_SANITIZE_SPECIAL_CHARS);
+
+            $query = " INSERT INTO genre (genre) VALUES (:genre) ";
+
+            $statement = $db->prepare($query);  
+
+            $statement->bindValue(":genre", $genre);
+
+            if($statement->execute())
+            {
+                header("Location:genre_list.php");
+                exit();
+            }
+        } else {
+            $error = "There was something wrong with your submission form.";
+        }
+
+        unset($statement);
     }
 ?>
 
@@ -58,15 +84,36 @@
                 <a class="nav-link" href="index.php">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Anime</a>
+                <a class="nav-link" href="anime_list.php">Anime</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Genres</a>
+                <a class="nav-link" href="genre_list.php">Genres</a>
+            </li>
+            <?php if(isset($_SESSION["loggedin"]) && $_SESSION['user_type'] == 1) : ?>
+                <li class="nav-item">
+                    <a href="admin.php" class="nav-link">Admin-View</a>
+                </li>
+            <?php endif ?>
+        </ul>
+
+        <ul class="navbar-nav mr-auto">
+        <?php if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) : ?>
+            <li class="nav-item">
+                <span class="navbar-text">Welcome, <?= $_SESSION['username'] ?></a>
+            </li>
+        <?php else : ?>
+            <li class="nav-item">
+                <a href="register_page.php" class="nav-link">Register</a>
             </li>
             <li class="nav-item">
-                <a href="admin.php" class="nav-link">Admin</a>
+                <a href="login.php" class="nav-link">Login</a>
+            </li>
+        <?php endif ?>
+            <li class="nav-item pl-4">
+                <a href="logout.php" class="nav-link">Logout</a>
             </li>
         </ul>
+        
         <form action="" class="form-inline my-2 my-lg-0">
             <input type="search" class="form-control mr-sm-2" placeholder="Search anime..." aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

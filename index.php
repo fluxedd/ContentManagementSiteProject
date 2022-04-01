@@ -38,10 +38,10 @@
                 <a class="nav-link" href="index.php">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Anime</a>
+                <a class="nav-link" href="anime_list.php">Anime</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Genres</a>
+                <a class="nav-link" href="genre_list.php">Genres</a>
             </li>
             <?php if(isset($_SESSION["loggedin"]) && $_SESSION['user_type'] == 1) : ?>
                 <li class="nav-item">

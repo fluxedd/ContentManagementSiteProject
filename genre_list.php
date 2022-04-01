@@ -1,28 +1,14 @@
 <?php 
     require('connect.php');
 
-    if($_GET && is_numeric($_GET['animeID']))
-    {
-        $query = "SELECT a.title, b.genre, a.episodeCount, a.image, a.studio, a.timestamp
-        FROM Anime AS a
-        JOIN Genre AS b ON b.genreID = a.genre_fk
-        WHERE a.animeID = :animeID 
-        LIMIT 1";
+    session_start();
 
-        $statement = $db->prepare($query);
+    $query = "SELECT * FROM genre ORDER BY genre ASC ";
 
-        $id = filter_input(INPUT_GET, 'animeID', FILTER_SANITIZE_NUMBER_INT);
+    $statement = $db->prepare($query);
 
-        $statement->bindValue('animeID', $id, PDO::PARAM_INT);
-        $statement->execute();
-
-        $row = $statement->fetch();
-    } else {
-        header("Location:index.php");
-        exit();
-    }
+    $statement->execute();
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,14 +25,14 @@
         }
 
         .card-img-top {
-            width: 350px;
+            width: 390px;
         }
     </style>
     <title>AniLogger</title>
 </head>
 <body class="body">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a href="index.php" class="navbar-brand">AniLogger</a>
+        <a href="index.php" class="navbar-brand">AniLogger</a> 
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href="index.php">Home</a>
@@ -87,19 +73,15 @@
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </nav>
-    <div class="card border-info mb-3" >
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/-Insert_image_here-.svg/1200px--Insert_image_here-.svg.png" alt="anime image" class="card-img-top">
-        <div class="card-body text-info">
-            <h2 class="card-title"><?= $row['title'] ?></h2>
+    <div class="py-3">
+        <div class="container">
+            <p class="display-4">Genres</p>
             <ul class="list-group">
-                <li class="list-group-item"><span class="font-weight-bold">Genre:</span> <?= $row['genre'] ?></li>
-                <li class="list-group-item"><span class="font-weight-bold">Number of Episodes:</span> <?= $row['episodeCount'] ?></li>
-                <li class="list-group-item"><span class="font-weight-bold">Studio:</span> <?= $row['studio'] ?></li>
-                <li class="list-group-item"><a class="btn btn-primary btn-sm" href="#">Submit a review</a></li>
+            <?php while($row = $statement->fetch()) : ?>
+                <li class="list-group-item" style="width: 350px;"><?= $row['genre'] ?></li>
+            <?php endwhile ?>  
             </ul>
-        </div>
-        <div class="card-footer">
-            <small class="text-muted">Date added: <?= $row['timestamp'] ?></small> 
+            <a class="btn btn-dark my-3" href="post_genre.php">Add Genre</a>
         </div>
     </div>
 </body>

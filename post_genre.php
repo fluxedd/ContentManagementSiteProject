@@ -1,28 +1,20 @@
 <?php 
     require('connect.php');
+    
+    session_start();
 
-    if($_GET && is_numeric($_GET['animeID']))
+    if(!isset($_SESSION['loggedin']))
     {
-        $query = "SELECT a.title, b.genre, a.episodeCount, a.image, a.studio, a.timestamp
-        FROM Anime AS a
-        JOIN Genre AS b ON b.genreID = a.genre_fk
-        WHERE a.animeID = :animeID 
-        LIMIT 1";
-
-        $statement = $db->prepare($query);
-
-        $id = filter_input(INPUT_GET, 'animeID', FILTER_SANITIZE_NUMBER_INT);
-
-        $statement->bindValue('animeID', $id, PDO::PARAM_INT);
-        $statement->execute();
-
-        $row = $statement->fetch();
-    } else {
-        header("Location:index.php");
-        exit();
+        echo "<script>alert('You must be logged in to do this!'); 
+        window.location.href='index.php';</script>";
     }
-?>
 
+    $query = "SELECT * FROM genre ORDER BY genre ASC";
+
+    $statement = $db->prepare($query);
+
+    $statement->execute();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,14 +31,19 @@
         }
 
         .card-img-top {
-            width: 350px;
+            width: 390px;
         }
+
+    label.title {
+            font-style: bold;
+        }
+
     </style>
     <title>AniLogger</title>
 </head>
 <body class="body">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a href="index.php" class="navbar-brand">AniLogger</a>
+        <a href="index.php" class="navbar-brand">AniLogger - Add</a> 
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href="index.php">Home</a>
@@ -87,19 +84,16 @@
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </nav>
-    <div class="card border-info mb-3" >
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/-Insert_image_here-.svg/1200px--Insert_image_here-.svg.png" alt="anime image" class="card-img-top">
-        <div class="card-body text-info">
-            <h2 class="card-title"><?= $row['title'] ?></h2>
-            <ul class="list-group">
-                <li class="list-group-item"><span class="font-weight-bold">Genre:</span> <?= $row['genre'] ?></li>
-                <li class="list-group-item"><span class="font-weight-bold">Number of Episodes:</span> <?= $row['episodeCount'] ?></li>
-                <li class="list-group-item"><span class="font-weight-bold">Studio:</span> <?= $row['studio'] ?></li>
-                <li class="list-group-item"><a class="btn btn-primary btn-sm" href="#">Submit a review</a></li>
-            </ul>
-        </div>
-        <div class="card-footer">
-            <small class="text-muted">Date added: <?= $row['timestamp'] ?></small> 
+    <div class="py-3">
+        <div class="container">
+            <p class="display-4">New Genre Entry</p>
+            <form action="process.php" method="post">
+                <div class="form-group">
+                    <label for="genre" class="font-weight-bold">Genre</label>
+                    <input type="text" class="form-control" id="title" name="title" style="width: 200px;">  
+                </div>
+                <button class="btn btn-dark" name="command" value="Add Genre">Add Genre</button>
+            </form>
         </div>
     </div>
 </body>
