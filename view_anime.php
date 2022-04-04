@@ -98,6 +98,10 @@
                 <li class="list-group-item"><span class="font-weight-bold">Genre:</span> <?= $row['genre'] ?></li>
                 <li class="list-group-item"><span class="font-weight-bold">Number of Episodes:</span> <?= $row['episodeCount'] ?></li>
                 <li class="list-group-item"><span class="font-weight-bold">Studio:</span> <?= $row['studio'] ?></li>
+                <li class="list-group-item">
+                    <a href="edit_anime.php?animeID=<?= $row['animeID'] ?>&username=<?= $row['username'] ?>" class="btn btn-dark">Edit</a>
+                    <a href="delete_anime.php?animeID=<?= $row['animeID'] ?>&username=<?= $row['username'] ?>" class="btn btn-danger">Delete</a>
+                </li>
             </ul>
         </div>
         <div class="card-footer">

@@ -80,8 +80,14 @@
                         <div class="card-body">
                             <h2 class="card-title"><a href="view_anime.php?animeID=<?= $row['animeID'] ?>"><?=$row['title'] ?></a></h2>
                         </div>
-                        <p class="card-text pl-3"><small class="text-muted">Last updated <?= $row['timestamp'] ?></small></p>
-                        <p class="card-text pl-3"><small class="text-muted">Created by: <?= $row['username'] ?></small></p>
+                        <p class="card-text pl-3">
+                            <small class="text-muted">Last updated: 
+                                <?php $input = $row['timestamp'] ?>
+                                <?php $date = strtotime($input) ?>
+                                <?= date('F d, Y @ g:i:s a', $date) ?>
+                            </small>
+                        </p>
+                        <p class="card-text pl-3"><small class="text-muted">Added by: <?= $row['username'] ?></small></p>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><a href="review_list.php?animeID=<?= $row['animeID'] ?>">Reviews List</a></li>
                             <li class="list-group-item"><a href="post_review.php?animeID=<?= $row['animeID'] ?>">Leave a Review</a></li>
