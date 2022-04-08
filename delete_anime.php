@@ -7,7 +7,7 @@
     {
         echo "<script>alert('You must be logged in to do this!'); 
         window.location.href='index.php';</script>";
-    } else if (($_GET['username'] != $_SESSION['username'])) {
+    } else if (($_GET['username'] != $_SESSION['username']) && $_SESSION['user_type'] != 1) {
         echo "<script>alert('You can only delete your own posts!'); 
         window.location.href='index.php';</script>";
     } else {

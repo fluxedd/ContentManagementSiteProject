@@ -39,7 +39,7 @@
 
             if($file_upload_detected) 
             {
-                $file_filename = $_FILES['uploadImage']['name'];
+                $file_filename = microtime() . $_FILES['uploadImage']['name'];
                 $temporary_file_path = $_FILES['uploadImage']['tmp_name'];
                 $new_file_path = file_upload_path($file_filename);
 
