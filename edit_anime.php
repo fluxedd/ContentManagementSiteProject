@@ -33,7 +33,6 @@
         }
     }
 
-    
 
 
 ?>
@@ -133,10 +132,6 @@
                         <label for="studio" class="font-weight-bold">Studio</label>
                         <input type="text" class="form-control" id="studio" name="studio" value="<?= $fetch['studio'] ?>">
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="uploadImage" class="font-weight-bold">Upload Image</label>
-                    <input type="file" class="form-control-file" id="uploadImage" name="uploadImage">
                 </div>
                 <input type="hidden" name="animeID" value="<?= $fetch['animeID'] ?>" />
                 <button class="btn btn-dark" name="command" value="Edit Anime">Edit Anime</button>

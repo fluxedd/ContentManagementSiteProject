@@ -3,11 +3,21 @@
 
     session_start();
 
-    $query = "SELECT * FROM anime ORDER BY timestamp DESC";
+    if(isset($_POST['search']))
+    {
+        if(isset($_POST['keyword']))
+        {
+            $keyword = filter_input(INPUT_POST, 'keyword', FILTER_SANITIZE_SPECIAL_CHARS);
+            $query = " SELECT * FROM anime WHERE title LIKE '%$keyword%' ORDER BY timestamp DESC ";
+        } 
+    } else {
+        $query = "SELECT * FROM anime ORDER BY timestamp DESC";
+    }
 
     $statement = $db->prepare($query);
 
     $statement->execute();
+
 ?>
 
 <!DOCTYPE html>
@@ -65,9 +75,9 @@
                 <a href="logout.php" class="nav-link">Logout</a>
             </li>
         </ul>
-        <form action="" class="form-inline my-2 my-lg-0">
-            <input type="search" class="form-control mr-sm-2" placeholder="Search anime..." aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <form action="index.php" class="form-inline my-2 my-lg-0" method="post">
+            <input type="text" class="form-control mr-sm-2" name="keyword" placeholder="Search anime..." aria-label="Search">
+            <input class="btn btn-outline-success my-2 my-sm-0" type="submit" name="search" value="Search"/>
         </form>
     </nav>
     <div class="py-3">
