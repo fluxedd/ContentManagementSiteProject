@@ -3,7 +3,7 @@
 
     session_start();
 
-    $query = "SELECT * FROM anime ORDER BY timestamp DESC LIMIT 12";
+    $query = "SELECT * FROM anime ORDER BY timestamp DESC";
 
     $statement = $db->prepare($query);
 

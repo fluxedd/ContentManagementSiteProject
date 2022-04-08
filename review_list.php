@@ -7,7 +7,7 @@
     {
         $id = filter_input(INPUT_GET, 'animeID', FILTER_SANITIZE_NUMBER_INT);
         
-        $reviewsQuery = "SELECT *, r.timestamp
+        $reviewsQuery = "SELECT *, r.timestamp, r.username
         FROM review r
         JOIN anime a ON r.animeID = a.animeID
         WHERE r.animeID = :animeID
@@ -17,6 +17,28 @@
         $reviewsStmt = $db->prepare($reviewsQuery);
         $reviewsStmt->bindValue(':animeID', $id);
         $reviewsStmt->execute();
+    } else {
+        header('Location: index.php');
+    }
+
+    if($_GET && is_numeric($_GET['animeID']))
+    {
+        $query = "SELECT *
+        FROM Anime
+        WHERE animeID = :animeID 
+        LIMIT 1";
+
+        $statement = $db->prepare($query);
+
+        $id = filter_input(INPUT_GET, 'animeID', FILTER_SANITIZE_NUMBER_INT);
+
+        $statement->bindValue('animeID', $id, PDO::PARAM_INT);
+        $statement->execute();
+
+        $animeRow = $statement->fetch();
+    } else {
+        header("Location:index.php");
+        exit();
     }
 ?>
 
@@ -81,13 +103,15 @@
     </nav>
     <div class="py-3">
         <div class="container">
-            <p class="display-4">Reviews</p>
+            <p class="display-4">Reviews for <?= $animeRow['title'] ?></p>
             <ul class="list-group">
             <?php while($row = $reviewsStmt->fetch()) : ?>
-                <li class="list-group-item" style="width: 350px;">
-                    <?= $row['review'] ?>
-                    <p><?= $row['timestamp'] ?></p>
-                    <p><?= $row['satisfactoryRating'] . '/10' ?></p>
+                <li class="list-group-item" style="width: 500px;">
+                    <p><?= $row['review'] ?></p>
+                    <p class="text-success font-weight-bold"><?= $row['satisfactoryRating'] . '/10' ?></p>
+                    <p>
+                        <small class="text-muted">Posted on: <?= $row['timestamp'] ?> by <span class="text-primary"><?= $row['username'] ?></span></small>     
+                    </p>
                 </li>
             <?php endwhile ?>  
             </ul>

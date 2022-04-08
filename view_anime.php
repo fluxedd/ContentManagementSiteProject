@@ -93,7 +93,7 @@
     <div class="card mb-3" >
         <img src="<?= (isset($row['image'])) ? 'uploads/' . $row['image'] : 'uploads/no_image.png' ?>"  class="card-img-top rounded mx-auto d-block">
         <div class="card-body">
-            <h2 class="card-title font-weight-bold"><?= $row['title'] ?></h2>
+            <h2 class="card-title font-weight-bold display-4"><?= $row['title'] ?></h2>
             <ul class="list-group">
                 <li class="list-group-item"><span class="font-weight-bold">Genre:</span> <?= $row['genre'] ?></li>
                 <li class="list-group-item"><span class="font-weight-bold">Number of Episodes:</span> <?= $row['episodeCount'] ?></li>
