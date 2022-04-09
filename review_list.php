@@ -119,6 +119,9 @@
                     <p>
                         <small class="text-muted">Posted on: <?= $row['timestamp'] ?> by <span class="text-primary"><?= $row['username'] ?></span></small>     
                     </p>
+                    <?php if(isset($_SESSION["loggedin"]) && $_SESSION['user_type'] == 1) : ?>
+                        <a href="delete_review.php?reviewID=<?= $row['reviewID'] ?>&animeID=<?= $row['animeID'] ?>" class="btn btn-danger btn-sm">Delete</a>
+                    <?php endif ?>
                 </li>
             <?php endwhile ?>  
             </ul>

@@ -94,7 +94,7 @@
                                 <?= date('F d, Y @ g:i:s a', $date) ?>
                             </small>
                         </p>
-                        <p class="card-text pl-3"><small class="text-muted">Added by: <?= $row['username'] ?></small></p>
+                        <p class="card-text pl-3"><small class="text-muted">Added by: <span class="text-primary"><?= $row['username'] ?></span></small></p>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><a href="review_list.php?animeID=<?= $row['animeID'] ?>">Reviews List</a></li>
                             <li class="list-group-item"><a href="post_review.php?animeID=<?= $row['animeID'] ?>">Leave a Review</a></li>
