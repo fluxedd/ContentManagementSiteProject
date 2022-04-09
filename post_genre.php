@@ -4,6 +4,8 @@
     session_start();
 
     require('warning.php');
+
+    require('search_function.php');
 ?>
 
 <!DOCTYPE html>
@@ -68,10 +70,15 @@
                 <a href="logout.php" class="nav-link">Logout</a>
             </li>
         </ul>
-
-        <form action="" class="form-inline my-2 my-lg-0">
-            <input type="search" class="form-control mr-sm-2" placeholder="Search anime..." aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <form action="index.php" class="form-inline my-2 my-lg-0" method="post">
+            <input type="text" class="form-control mr-sm-2" name="keyword" placeholder="Search anime..." aria-label="Search">
+            <select name="genre" id="genre" class="form-control mr-sm-2">
+                <option value="All Genres">All Genres</option>
+                <?php while($genreRow = $genreStatement->fetch()) : ?>
+                    <option value="<?= $genreRow['genreID'] ?>"><?= $genreRow['genre'] ?></option>
+                <?php endwhile ?>
+            </select>
+            <input class="btn btn-outline-success my-2 my-sm-0" type="submit" name="search" value="Search"/>
         </form>
     </nav>
     <div class="py-3">
