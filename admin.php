@@ -42,10 +42,10 @@
                 <a class="nav-link" href="index.php">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="anime_list">Anime</a>
+                <a class="nav-link" href="anime_list.php">Anime</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="genre_list">Genres</a>
+                <a class="nav-link" href="genre_list.php">Genres</a>
             </li>
             <li class="nav-item">
                 <a href="admin.php" class="nav-link">Admin-View</a>

@@ -5,6 +5,10 @@
 
     require('search_function.php');
 
+    require('vendor/autoload.php');
+    
+
+
     if(!isset($_SESSION['loggedin']))
     {
         echo "<script>alert('You must be logged in to do this!'); 
@@ -58,7 +62,15 @@
             font-style: bold;
         }
     </style>
-    <script src="/path/to/tinymce.min.js"></script>
+    <script src="vendor/tinymce/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript">
+    tinymce.init({
+        selector: 'textarea',
+        menubar: false,
+        plugins: 'code',
+        toolbar: 'bold italic underline code'
+    });
+    </script>
     <title>AniLogger</title>
 </head>
 <body class="body">
