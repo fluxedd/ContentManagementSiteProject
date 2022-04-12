@@ -1,0 +1,6 @@
+{
+  "require": {
+    "ezyang/htmlpurifier": "^4.14",
+    "tinymce/tinymce": "^6.0"
+  }
+}

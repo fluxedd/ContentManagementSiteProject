@@ -57,8 +57,8 @@
     label.title {
             font-style: bold;
         }
-
     </style>
+    <script src="/path/to/tinymce.min.js"></script>
     <title>AniLogger</title>
 </head>
 <body class="body">
