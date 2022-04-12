@@ -6,9 +6,14 @@
     require('search_function.php');
 
     require('vendor/autoload.php');
+
+    $config = HTMLPurifier_Config::createDefault();
+    $config->set('Cache.DefinitionImpl', null);
+    $config->set('HTML.AllowedElements', 'strong, em, span');
+    $config->set('HTML.AllowedAttributes', 'style');
+
+    $purifier = new HTMLPurifier($config);
     
-
-
     if(!isset($_SESSION['loggedin']))
     {
         echo "<script>alert('You must be logged in to do this!'); 
@@ -19,7 +24,7 @@
     {
         if($_POST && !empty($_POST['review']))
         {
-            $review = filter_input(INPUT_POST, 'review', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $review = $purifier->purify($_POST['review']);
             $id = filter_input(INPUT_GET, 'animeID', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $rating = $_POST['rating'];
             $query = "INSERT INTO review (review, satisfactoryRating, animeID, username) VALUES (:review, :rating, :animeID, :username)";
