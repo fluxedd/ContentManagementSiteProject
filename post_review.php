@@ -1,10 +1,7 @@
 <?php 
     require('connect.php');
-    
     session_start();
-
     require('search_function.php');
-
     require('vendor/autoload.php');
 
     $config = HTMLPurifier_Config::createDefault();

@@ -8,6 +8,21 @@ class ComposerStaticInit30836754919da83e26b4151a33307320
 {
     public static $files = array (
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
+        '84de7427c4a83c3bf0e7844f99d3016f' => __DIR__ . '/../..' . '/library/HTMLPurifier.composer.php',
+    );
+
+    public static $prefixLengthsPsr4 = array (
+        'G' => 
+        array (
+            'Gumlet\\' => 7,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'Gumlet\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/gumlet/php-image-resize/lib',
+        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -15,7 +30,8 @@ class ComposerStaticInit30836754919da83e26b4151a33307320
         array (
             'HTMLPurifier' => 
             array (
-                0 => __DIR__ . '/..' . '/ezyang/htmlpurifier/library',
+                0 => __DIR__ . '/../..' . '/library/HTMLPurifier.php',
+                1 => __DIR__ . '/..' . '/ezyang/htmlpurifier/library',
             ),
         ),
     );
@@ -27,6 +43,8 @@ class ComposerStaticInit30836754919da83e26b4151a33307320
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInit30836754919da83e26b4151a33307320::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit30836754919da83e26b4151a33307320::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInit30836754919da83e26b4151a33307320::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit30836754919da83e26b4151a33307320::$classMap;
 

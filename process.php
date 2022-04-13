@@ -1,13 +1,8 @@
 <?php 
     require('connect.php');
-
-    use Gumlet\ImageResize;
-
-    require ('\xampp\htdocs\a\php-image-resize-master\lib\ImageResize.php');
-    require ('\xampp\htdocs\a\php-image-resize-master\lib\ImageResizeException.php');
-    
     session_start();
-
+    require('vendor/autoload.php');
+    
     if($_SERVER['REQUEST_METHOD'] == 'POST')
     {
         if($_POST['command'] == 'Add Anime')

@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '69bffbd29b6fc27db55a1614133273bec67ab73c',
+        'reference' => '12631b5c446c805bc48d9a4d020c8087d25434de',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '69bffbd29b6fc27db55a1614133273bec67ab73c',
+            'reference' => '12631b5c446c805bc48d9a4d020c8087d25434de',
             'dev_requirement' => false,
         ),
         'ezyang/htmlpurifier' => array(
@@ -26,6 +26,15 @@
             'install_path' => __DIR__ . '/../ezyang/htmlpurifier',
             'aliases' => array(),
             'reference' => '12ab42bd6e742c70c0a52f7b82477fcd44e64b75',
+            'dev_requirement' => false,
+        ),
+        'gumlet/php-image-resize' => array(
+            'pretty_version' => '2.0.1',
+            'version' => '2.0.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../gumlet/php-image-resize',
+            'aliases' => array(),
+            'reference' => '5ef461c53241933a3e14e4582a9d2884b8261213',
             'dev_requirement' => false,
         ),
         'tinymce/tinymce' => array(
