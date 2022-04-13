@@ -54,7 +54,7 @@
     <?php require('navbar.php') ?>
     <div class="py-3">
         <div class="container">
-            <p class="display-4">Reviews for <?= $animeRow['title'] ?></p>
+        <p class="display-4">Reviews for <?= $animeRow['title'] ?></p>
             <ul class="list-group">
             <?php while($row = $reviewsStmt->fetch()) : ?>
                 <li class="list-group-item" style="width: 500px;">
