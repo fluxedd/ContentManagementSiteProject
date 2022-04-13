@@ -54,17 +54,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <style>
         .body {
-            margin-left: 300px;
-            margin-right: 300px;
+            margin-left: 200px;
+            margin-right: 200px;
             margin-top: 20px;
-        }
-
-        .card-img-top {
-            width: 390px;
-        }
-
-    label.title {
-            font-style: bold;
         }
     </style>
     <script src="vendor/tinymce/tinymce/tinymce.min.js"></script>
@@ -101,7 +93,7 @@
         <ul class="navbar-nav mr-auto">
         <?php if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) : ?>
             <li class="nav-item">
-                <span class="navbar-text">Welcome, <?= $_SESSION['username'] ?></a>
+                <span class="navbar-text">Welcome, <?= $_SESSION['username'] ?></span>
             </li>
         <?php else : ?>
             <li class="nav-item">
