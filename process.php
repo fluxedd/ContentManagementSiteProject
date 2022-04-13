@@ -40,7 +40,7 @@
 
                 if($file_upload_detected) 
                 {
-                    $file_filename = microtime() . $_FILES['uploadImage']['name'];
+                    $file_filename = microtime(true) . $_FILES['uploadImage']['name'];
                     $temporary_file_path = $_FILES['uploadImage']['tmp_name'];
                     $new_file_path = file_upload_path($file_filename);
 
@@ -72,7 +72,7 @@
                 $statement->bindValue(":genre", $genre);
                 $statement->bindValue(":episodeCount", $episodeCount);
                 $statement->bindValue(":studio", $studio);
-                $statement->bindValue(":image", $file_filename);
+                $statement->bindValue(":image", trim($file_filename));
                 $statement->bindValue(":username", $_SESSION['username']);
 
                 if($statement->execute())

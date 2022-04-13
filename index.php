@@ -8,7 +8,6 @@
     $statement = $db->prepare($queryy);
 
     $statement->execute();
-
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +23,7 @@
             <?php while($row = $statement->fetch()) : ?>
                 <div class="col-md-4">
                     <div class="card mb-3" >
-                        <img src="<?= (isset($row['image'])) ? 'uploads/resized_' . $row['image'] : 'uploads/no_image.png' ?>"  class="card-img-top">
+                        <img src="<?= (isset($row['image'])) ? 'uploads/resized_' . $row['image'] : 'uploads/no_image.png' ?>"  class="card-img-top" alt='<?= $row['image'] ?>'>
                         <div class="card-body">
                             <h2 class="card-title"><a href="view_anime.php?animeID=<?= $row['animeID'] ?>"><?=$row['title'] ?></a></h2>
                         </div>
