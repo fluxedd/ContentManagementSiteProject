@@ -1,13 +1,10 @@
 <?php 
     require('connect.php');
-
     session_start();
-
     require('warning.php');
-
     require('search_function.php');
 
-    $query = "SELECT username FROM users";
+    $query = "SELECT * FROM users";
 
     $statement = $db->prepare($query);
 
@@ -25,11 +22,26 @@
     <div class="py-3">
         <div class="container">
         <p class="display-4">Users</p>
+        <form action="process_user.php" method="post">
             <ul class="list-group">
-            <?php while($row = $statement->fetch()) : ?>
-                <li class="list-group-item" style="width: 350px;"><?= $row['username'] ?></li>
-            <?php endwhile ?>  
+                <?php while($row = $statement->fetch()) : ?>
+                    <li class="list-group-item" style="width: 350px;">
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" name="usersRadio" id="usersRadio" value="<?= $row['username'] ?>">
+                            <label for="usersRadio" class="form-check-label pl-1"><?= $row['username'] ?></label>
+                            <?php if($row['user_type'] == 1) : ?>
+                                <span class="text-success">(admin)</span>
+                            <?php endif ?>
+                            <?php if($row['user_type'] == 2) : ?>
+                                <span class="text-warning">(mod)</span>
+                            <?php endif ?>
+                        </div>
+                    </li>   
+                <?php endwhile ?>  
             </ul>
+            <button class="btn btn-primary mt-3" name="command" value="Promote User">Promote</button>
+            <button class="btn btn-danger mt-3" name="command" value="Delete User">Delete</button>
+        </form>
         </div>
     </div>
 </body>

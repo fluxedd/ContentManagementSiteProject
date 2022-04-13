@@ -12,7 +12,7 @@
             {
                 function file_upload_path($original_filename, $upload_subfloder_name = 'uploads')
                 {
-                    $current_folder = dirname(__FILE__);
+                    $current_folder = dirname(__FILE__);    
                     $path_segments = [$current_folder, $upload_subfloder_name, basename($original_filename)];
                     return join(DIRECTORY_SEPARATOR, $path_segments);
                 }
@@ -79,7 +79,6 @@
             } else {
                 $error = "There was something wrong with your submission form.";
             }
-
             unset($statement);
         }
 
@@ -103,7 +102,6 @@
             } else {
                 $error = "There was something wrong with your submission form.";
             }
-
             unset($statement);
         }
 
@@ -111,51 +109,6 @@
         {
             if($_POST && !empty($_POST['title']) && !empty($_POST['genre_fk']) && !empty($_POST['episodeCount']) && !empty($_POST['studio']) && isset($_POST['animeID']))
             {
-                // function file_upload_path($original_filename, $upload_subfloder_name = 'uploads')
-                // {
-                //     $current_folder = dirname(__FILE__);
-                //     $path_segments = [$current_folder, $upload_subfloder_name, basename($original_filename)];
-                //     return join(DIRECTORY_SEPARATOR, $path_segments);
-                // }
-
-                // function check_mime_type($temp_path, $new_path)
-                // {
-                //     $allowed_mime_types = ['image/gif', 'image/jpeg', 'image/png'];
-                //     $allowed_file_extensions = ['jpg', 'jpeg', 'png', 'gif'];
-                    
-                //     $actual_file_extension = pathinfo($new_path, PATHINFO_EXTENSION);
-                //     $actual_mime_type = mime_content_type($temp_path);
-
-                //     $file_extension_valid = in_array($actual_file_extension, $allowed_file_extensions);
-                //     $mime_type_valid = in_array($actual_mime_type, $allowed_mime_types);
-
-                //     return $file_extension_valid && $mime_type_valid;
-                // }
-
-                // $file_upload_detected = isset($_FILES['uploadImage']) && ($_FILES['uploadImage']['error'] === 0);
-                // $upload_error_detected = isset($_FILES['uploadImage']) && ($_FILES['uploadImage']['error'] > 0);
-
-                // if($file_upload_detected) 
-                // {
-                //     $file_filename = $_FILES['uploadImage']['name'];
-                //     $temporary_file_path = $_FILES['uploadImage']['tmp_name'];
-                //     $new_file_path = file_upload_path($file_filename);
-
-                //     if(mime_content_type($temporary_file_path) == 'image/jpeg' || mime_content_type($temporary_file_path) == 'image/png')
-                //     {
-                //         $resizedImage = new ImageResize($temporary_file_path);
-                //         $resizedImage->resize(700, 500, $allow_enlarge = true);
-                //         $resized_new_file_path = file_upload_path($resizedImage->save('uploads\resized_' . $file_filename));
-                //     }
-
-                //     if(check_mime_type($temporary_file_path, $new_file_path))
-                //     {
-                //         move_uploaded_file($temporary_file_path, $new_file_path);    
-                //     } else {
-                //         $file_filename = null;
-                //     }
-                // }
-
                 $id = filter_input(INPUT_POST, 'animeID', FILTER_SANITIZE_NUMBER_INT);
                 $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_SPECIAL_CHARS);
                 $genre = filter_input(INPUT_POST, 'genre_fk', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -193,3 +146,24 @@
         header('Location: index.php');
     }
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        .body {
+            margin-left: 200px;
+            margin-right: 200px;
+            margin-top: 20px;
+        }
+    </style>
+    <title>AniLogger</title>
+</head>
+<body class="body">
+    <h1 class="text-danger"><?= $error ?></h1>
+</body>
+</html>
