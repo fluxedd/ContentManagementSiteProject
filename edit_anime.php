@@ -77,6 +77,7 @@
                 </div>
                 <input type="hidden" name="animeID" value="<?= $fetch['animeID'] ?>" />
                 <button class="btn btn-dark" name="command" value="Edit Anime">Edit Anime</button>
+                <button class="btn btn-dark" name="command" value="Remove Image">Remove Image</button>
             <?php endif ?>
             </form>
         </div>

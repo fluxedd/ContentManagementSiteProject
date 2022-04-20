@@ -24,7 +24,7 @@
             <p class="display-4">Anime</p>
             <ul class="list-group">
             <?php while($row = $statement->fetch()) : ?>
-                <li class="list-group-item" style="width: 350px;"><a href="#"><?= $row['title'] ?></a></li>
+                <li class="list-group-item" style="width: 350px;"><?= $row['title'] ?></li>
             <?php endwhile ?>  
             </ul>
             <a class="btn btn-dark my-3" href="post_anime.php">Add Anime</a>

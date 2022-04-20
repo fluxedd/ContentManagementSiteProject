@@ -35,6 +35,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         .body {
             margin-left: 200px;
@@ -107,7 +110,22 @@
                 <li class="list-group-item"><span class="font-weight-bold">Studio:</span> <?= $row['studio'] ?></li>
                 <li class="list-group-item">
                     <a href="edit_anime.php?animeID=<?= $row['animeID'] ?>&username=<?= $row['username'] ?>" class="btn btn-dark">Edit</a>
-                    <a href="delete_anime.php?animeID=<?= $row['animeID'] ?>&username=<?= $row['username'] ?>" class="btn btn-danger">Delete</a>
+                    <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete">Delete</button>
+                    <div class="modal" id="confirmDelete" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmDelete">Confirm delete?</h5>
+                                </div>
+                                <div class="modal-body">Are you sure you want to delete?</div>
+                                <div class="modal-footer">
+                                    <button class="btn-btn-secondary" data-dismiss="modal" type="button">Close</button>
+                                    <a href="delete_anime.php?animeID=<?= $row['animeID'] ?>&username=<?= $row['username'] ?>" class="btn btn-danger btn-secondary">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <a href="delete_anime.php?animeID=<?= $row['animeID'] ?>&username=<?= $row['username'] ?>" class="btn btn-danger">Delete</a> -->
                 </li>
             </ul>
         </div>
