@@ -57,7 +57,7 @@
         }
     </style>
     <script src="vendor/tinymce/tinymce/tinymce.min.js"></script>
-    <script type="text/javascript">
+    <script>
     tinymce.init({
         selector: 'textarea',
         menubar: false,

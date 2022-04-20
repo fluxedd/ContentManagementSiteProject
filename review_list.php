@@ -67,12 +67,12 @@
                         <small class="text-muted">Posted on: <?= $row['timestamp'] ?> by <span class="text-primary"><?= $row['username'] ?></span></small>     
                     </p>
                     <?php if(isset($_SESSION["loggedin"]) && $_SESSION['user_type'] == 1) : ?>
-                    <button class="btn btn-danger mt-3" type="button" data-toggle="modal" data-target="#confirmDelete">Delete</button>
-                        <div class="modal" id="confirmDelete" tabindex="-1" role="dialog">
+                    <button class="btn btn-danger mt-3" type="button" data-toggle="modal" data-target="#confirmDelete<?= $row['reviewID'] ?>">Delete</button>
+                        <div class="modal" id="confirmDelete<?= $row['reviewID'] ?>" tabindex="-1" role="dialog">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="confirmDelete">Confirm delete?</h5>
+                                        <h5 class="modal-title">Confirm delete?</h5>
                                     </div>
                                     <div class="modal-body">Are you sure you want to delete?</div>
                                     <div class="modal-footer">

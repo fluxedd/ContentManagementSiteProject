@@ -101,7 +101,7 @@
         </form>
     </nav>
     <div class="card mb-3" >
-        <img src="<?= (isset($row['image'])) ? 'uploads/' . $row['image'] : 'uploads/no_image.png' ?>"  class="card-img-top rounded mx-auto d-block">
+        <img src="<?= (isset($row['image'])) ? 'uploads/' . $row['image'] : 'uploads/no_image.png' ?>" alt="animeImage" class="card-img-top rounded mx-auto d-block">
         <div class="card-body">
             <h2 class="card-title font-weight-bold display-4"><?= $row['title'] ?></h2>
             <ul class="list-group">
@@ -115,7 +115,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="confirmDelete">Confirm delete?</h5>
+                                    <h5 class="modal-title">Confirm delete?</h5>
                                 </div>
                                 <div class="modal-body">Are you sure you want to delete?</div>
                                 <div class="modal-footer">
@@ -125,7 +125,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <a href="delete_anime.php?animeID=<?= $row['animeID'] ?>&username=<?= $row['username'] ?>" class="btn btn-danger">Delete</a> -->
                 </li>
             </ul>
         </div>

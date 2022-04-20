@@ -58,7 +58,7 @@
                 </div>
                 <div class="form-group">
                     <label for="genre" class="font-weight-bold">Genre</label>
-                    <select name="genre_fk" id="genre" class="form-control">
+                    <select name="genre_fk" id="genreList" class="form-control">
                         <option value="" disabled selected>Select a genre</option>
                         <?php while($row = $statement->fetch()) : ?>
                         <option value="<?=$row['genreID'] ?>"><?=$row['genre'] ?></option>
@@ -77,7 +77,6 @@
                 </div>
                 <input type="hidden" name="animeID" value="<?= $fetch['animeID'] ?>" />
                 <button class="btn btn-dark" name="command" value="Edit Anime">Edit Anime</button>
-                <button class="btn btn-dark" name="command" value="Remove Image">Remove Image</button>
             <?php endif ?>
             </form>
         </div>

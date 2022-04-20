@@ -30,8 +30,8 @@
                 <?php while($row = $statement->fetch()) : ?>
                     <li class="list-group-item" style="width: 350px;">
                         <div class="form-check">
-                            <input type="radio" class="form-check-input" name="usersRadio" id="usersRadio" value="<?= $row['username'] ?>">
-                            <label for="usersRadio" class="form-check-label pl-1"><?= $row['username'] ?></label>
+                            <input type="radio" class="form-check-input" name="usersRadio" id="usersRadio<?= $row['username'] ?>" value="<?= $row['username'] ?>">
+                            <label for="usersRadio<?= $row['username'] ?>" class="form-check-label pl-1"><?= $row['username'] ?></label>
                             <?php if($row['user_type'] == 1) : ?>
                                 <span class="text-success">(admin)</span>
                             <?php endif ?>
@@ -48,7 +48,7 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="confirmDelete">Confirm delete?</h5>
+                                <h5 class="modal-title">Confirm delete?</h5>
                             </div>
                             <div class="modal-body">Are you sure you want to delete?</div>
                             <div class="modal-footer">
