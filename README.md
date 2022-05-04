@@ -1,1 +1,6 @@
-Anime Review Forum CMS w/ a Registration/Login System
+# Content Management System Website
+## AniLogger
+> structured like a forum
+> post reviews 
+> user management 
+> login/registration system
